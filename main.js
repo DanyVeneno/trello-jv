@@ -1,4 +1,4 @@
-const Trello = require("./main");
+
 require('es6-promise').polyfill();
 var rest = require('needle');
 var objectAssign = require('object-assign');
@@ -15,6 +15,7 @@ var Trello = function (key, token) {
 Trello.prototype.createQuery = function () {
     return {key: this.key, token: this.token};
 };
+
 
 function makeRequest(fn, uri, options, callback) {
     if (callback) {
@@ -132,15 +133,22 @@ Trello.prototype.updateBoardPref = function (boardId, field, value, callback) {
 };
 
 Trello.prototype.addCard = function (name, description, listId, callback) {
+    //console.log()
     var query = this.createQuery();
     query.name = name;
     query.idList = listId;
+    
 
     if (description !== null)
         query.desc = description;
+        
 
     return makeRequest(rest.post, this.uri + '/1/cards', {query: query}, callback);
+    
+    
+
 };
+
 
 Trello.prototype.addCardWithExtraParams = function(name, extraParams, listId, callback) {
     var query = this.createQuery();
